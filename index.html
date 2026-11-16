@@ -102,6 +102,24 @@ section{padding:64px 0}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none}}
 @media print{header,.menu,.btns,#toast,.steps{display:none}.hero,.dark{background:#fff!important;color:#000!important}.hero *,.dark *{color:#000!important}.reveal{opacity:1;transform:none}.card{box-shadow:none;break-inside:avoid}section{padding:24px 0}.metrics{margin:0}}
+
+.chip{border:1px solid var(--teal);background:#fff;color:var(--navy);border-radius:99px;padding:8px 16px;font:600 .88rem Manrope,sans-serif;cursor:pointer;margin:0 8px 8px 0}
+.chip[aria-pressed=true]{background:var(--teal);color:#fff}
+.chip.proc{border-style:dashed;background:var(--mint)}
+.tbl{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:14px;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:.85rem}th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}th{background:var(--mint);color:var(--navy);position:sticky;top:0}
+.mine{background:var(--teal);color:#fff;border-radius:99px;padding:2px 10px;font-size:.75rem;font-weight:700}
+input,select{font:inherit;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--navy)}
+.bars div{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;align-items:center;margin:6px 0;font-size:.85rem}
+.bars i{display:block;height:14px;background:linear-gradient(90deg,var(--teal),var(--aqua));border-radius:8px}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 18px;margin:8px 0}summary{font-weight:700;cursor:pointer}details p{color:var(--slate);margin-top:6px}
+pre{background:var(--navy);color:#dff5f1;padding:14px;border-radius:12px;overflow-x:auto;font-size:.82rem;margin-top:10px}
+.sim{background:#FFF6DD;border:1px solid #ecd48a;color:#6b5200;border-radius:10px;padding:8px 14px;font-size:.85rem;margin-top:14px}
+.ok{color:#087a72;font-weight:700}.bad{color:#a4580a;font-weight:700}
+#sr{position:absolute;top:60px;right:24px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(7,30,46,.15);min-width:260px;display:none;z-index:60}#sr a{display:block;padding:10px 16px;text-decoration:none}#sr a:hover{background:var(--mint)}
+#q{width:190px;padding:8px 12px}
+.pr main>section:not(#recruiter),.pr header,.pr footer{display:none!important}
+@media(max-width:860px){#q{width:100%}.bars div{grid-template-columns:100px 1fr 48px}}
 </style>
 </head>
 <body>
@@ -109,9 +127,7 @@ section{padding:64px 0}
 <div class="wrap"><nav aria-label="Primary">
 <a class="brand" href="#top">Raj Niraj Nashikkar</a>
 <button class="menu" aria-expanded="false" aria-controls="links">Menu</button>
-<ul id="links">
-<li><a href="#about">About</a></li><li><a href="#pa">Prior Authorization</a></li><li><a href="#payers">Payers &amp; Tools</a></li><li><a href="#provider">Provider Operations</a></li><li><a href="#data">Data &amp; HIPAA</a></li><li><a href="#experience">Experience</a></li><li><a href="#contact">Contact</a></li>
-</ul></nav></div>
+<ul id="links"><li><a href="#about">About</a></li><li><a href="#pa">Prior Auth</a></li><li><a href="#ecosystem">Ecosystem</a></li><li><a href="#directory">Payers</a></li><li><a href="#knowledge">Provider Data</a></li><li><a href="#lab">Data Lab</a></li><li><a href="#experience">Experience</a></li><li><a href="#recruiter">Recruiter Overview</a></li><li><a href="#contact">Contact</a></li><li><input id="q" type="search" placeholder="Search site" aria-label="Search site" autocomplete="off"></li></ul><div id="sr" role="listbox"></div></nav></div>
 </header>
 
 <main id="top">
@@ -196,6 +212,13 @@ section{padding:64px 0}
 </div>
 </section>
 
+<section id="ecosystem" class="alt"><div class="wrap reveal"><h2>The US Healthcare Ecosystem, Mapped.</h2><p class="lead">Select an entity or a process to see what it does, who it connects to, what it exchanges and where data quality breaks down. This is a simplified educational model.</p>
+<div style="margin-top:28px" id="ents"></div><div class="card" id="entp" aria-live="polite"></div></div></section>
+<section id="directory"><div class="wrap reveal"><h2>Payer Directory: Industry Research.</h2><p class="lead">61 health-plan entries grouped by type, drawn from my own industry knowledge for ecosystem research. Parent companies, brands and TPAs are labelled, and relationships are noted where I know them. <b>No websites or links are listed because I have not verified any of them yet</b>; every status below reads "Not verified".</p>
+<p style="margin-top:14px"><span class="mine">My exposure</span> marks the payers I have personally worked with or interacted with. Everything else is research only, not employment or client experience.</p>
+<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap"><input id="pq" placeholder="Filter by name or region" aria-label="Filter payers"><select id="pt" aria-label="Filter by type"></select><span id="pc" class="note" style="align-self:center"></span></div>
+<div class="tbl" style="max-height:440px"><table id="ptab"></table></div>
+<h3 style="margin-top:36px">Infrastructure platforms and resources (not health plans)</h3><div class="tbl"><table id="itab"></table></div></div></section>
 <section id="provider" class="alt">
 <div class="wrap reveal">
 <h2>Beyond Authorization: Building Better Provider Operations.</h2>
@@ -209,6 +232,10 @@ section{padding:64px 0}
 </div>
 </section>
 
+<section id="knowledge" class="alt"><div class="wrap reveal"><h2>Provider Data Management Knowledge Center.</h2>
+<p class="lead">Credentialing checks whether a provider is qualified (licence, training, history). Enrollment registers that provider with a payer so they can be in network and be paid. They are related but separate processes.</p>
+<div class="grid g2" style="align-items:start"><div id="gloss"></div>
+<div class="card"><h3>Fictional provider record: edit it</h3><p class="note" style="margin:0 0 10px">Entirely fictional demonstration. Do not enter real identifiers.</p><div id="rec"></div><h3 style="margin-top:18px">Validation checklist</h3><ul id="chk" style="list-style:none;padding:0"></ul></div></div></div></section>
 <section id="data">
 <div class="wrap reveal">
 <h2>Healthcare Data Integrity Is More Than Data Entry.</h2>
@@ -259,6 +286,30 @@ section{padding:64px 0}
 </div>
 </section>
 
+<section id="lab"><div class="wrap reveal"><h2>Data Lab: Linked Synthetic Datasets.</h2>
+<p class="lead">Three fictional tables generated in your browser from a fixed random seed, so every number below can be reproduced. Contains no PHI and no real results.</p>
+<div class="sim">Synthetic data: 1,200 authorization requests and 250 providers are simulated. They do not represent real payer performance or my work results.</div>
+<div class="btns"><button class="btn o" data-csv="a">Download authorization_requests.csv</button><button class="btn o" data-csv="p">Download provider_master.csv</button><button class="btn o" data-csv="y">Download payer_directory.csv</button></div>
+<div class="grid g4" id="kpis"></div><div class="grid g2"><div class="card"><h3>Requests by service category</h3><div class="bars" id="b1"></div></div><div class="card"><h3>Average days pending, by documentation</h3><div class="bars" id="b2"></div><h3 style="margin-top:18px">Provider enrollment status</h3><div class="bars" id="b3"></div></div></div>
+<h3 style="margin-top:32px">SQL examples (same logic as the dashboard)</h3><pre>SELECT service_category, COUNT(*) FROM authorization_requests GROUP BY service_category;
+SELECT documentation_complete, AVG(days_pending) FROM authorization_requests GROUP BY documentation_complete;
+SELECT p.enrollment_status, COUNT(*) FROM authorization_requests a JOIN provider_master p ON a.demo_provider_id = p.demo_provider_id GROUP BY p.enrollment_status;</pre></div></section>
+<section id="case" class="dark"><div class="wrap reveal"><h2>Case Study: Documentation Gaps and Pending Authorizations.</h2><div class="sim">Simulated case study built on the synthetic dataset above. Results are illustrative, not real.</div>
+<div class="card" style="margin-top:20px"><div class="meta" id="sn"></div><h3 id="st"></h3><div id="sb"></div></div><div class="btns"><button class="btn o" id="sp">Previous</button><button class="btn p" id="sx">Next</button><button class="btn o" onclick="window.print()">Print or save as PDF</button></div></div></section>
+<section id="roadmap"><div class="wrap reveal"><h2>The Skills I Am Building for My Next Chapter.</h2><p class="lead">Honest about where each skill stands today.</p>
+<div class="grid g3"><div class="card"><h3>Stage 1: Existing foundation</h3><p><span class="mine">Demonstrated in my work</span></p><p style="margin-top:10px"><span class="tag">US healthcare operations</span><span class="tag">Prior Authorization</span><span class="tag">Payer workflow exposure</span><span class="tag">Eligibility and benefits</span><span class="tag">Clinical documentation</span><span class="tag">Healthcare terminology</span><span class="tag">HIPAA awareness</span><span class="tag">Excel and operational tracking</span></p></div>
+<div class="card"><h3>Stage 2: Analytical development</h3><p><b>Foundational, still building</b></p><p style="margin-top:10px"><span class="tag">Advanced Excel</span><span class="tag">Pivot Tables</span><span class="tag">XLOOKUP and SUMIFS</span><span class="tag">SQL fundamentals</span><span class="tag">Joins and aggregations</span><span class="tag">Data cleaning</span><span class="tag">Healthcare KPI reporting</span><span class="tag">Provider data validation</span><span class="tag">Process mapping</span></p><p class="note">Power BI or Tableau: future learning priority.</p></div>
+<div class="card"><h3>Stage 3: Consulting capability</h3><p><b>Future learning priorities</b></p><p style="margin-top:10px"><span class="tag">Structured problem-solving</span><span class="tag">Root cause analysis</span><span class="tag">Business case development</span><span class="tag">Stakeholder management</span><span class="tag">Market research</span><span class="tag">Provider operations strategy</span><span class="tag">Payer-provider ecosystem analysis</span><span class="tag">Insight storytelling</span></p></div></div></div></section>
+<section id="recruiter" class="alt"><div class="wrap reveal"><h2>Recruiter Overview</h2>
+<div class="card"><h3 style="font-size:1.5rem">Raj Niraj Nashikkar</h3><p class="meta">Healthcare Analytics &amp; Operations | Provider Data | US Healthcare</p>
+<p><b>Summary:</b> B.Pharm graduate with hands-on US Prior Authorization experience, building toward provider operations, enrollment and provider data roles.</p>
+<p><b>Current:</b> Executive, US Healthcare Operations, Credence Resource Management (July 2025 to present), Pune, India.</p>
+<p><b>Education:</b> Bachelor of Pharmacy, 2025, Delonix Society Baramati College of Pharmacy (DBATU).</p>
+<p><b>Verified metrics:</b> 150–200 individual PA requests weekly; reported 98% monthly quality score; 20+ payer environments; 10–20 daily follow-ups.</p>
+<p><b>Tools:</b> Availity, eviCore, Salesforce, Excel, Microsoft Office, Jira / Atlassian exposure; SQL fundamentals.</p>
+<p><b>Target roles:</b> Provider Operations, Provider Enrollment, Provider Data Management, Healthcare Operations.</p>
+<p><b>Contact:</b> nashikkarraj37@gmail.com | 7776876094 | Pune, Maharashtra, India</p>
+<div class="btns"><button class="btn p" id="pr">Print or save as PDF</button></div></div></div></section>
 <section id="contact" class="dark contact">
 <div class="wrap reveal">
 <h2>Let's Make Healthcare Operations Work Better.</h2>
@@ -302,6 +353,77 @@ const toast=document.getElementById('toast');
 function say(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2000)}
 document.getElementById('copy').onclick=async()=>{try{await navigator.clipboard.writeText('nashikkarraj37@gmail.com');say('Email copied')}catch(e){say('Copy failed. Select the email address and copy it manually.')}};
 document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+<script>const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let seed=20261116;const R=()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const pick=a=>a[Math.floor(R()*a.length)],wpick=(a,w)=>{let r=R()*w.reduce((x,y)=>x+y),i=0;while(r>w[i]){r-=w[i];i++}return a[i]};
+// ecosystem
+const E={pt:["Patients and members","Seek care and hold coverage",["pv","hp"],"Demographics, member ID, consent","Eligibility check, scheduling","Mismatched names or IDs"],
+pv:["Healthcare providers","Deliver care and order services",["cl","py","en"],"NPI, taxonomy, orders, notes","Enrollment, PA requests","Stale demographics, duplicates"],
+cl:["Clinics and practices","Employ providers, run front office",["pv","ch","py"],"Rosters, locations, claims","Onboarding, PA submission","Incomplete practice locations"],
+ho:["Hospitals","Inpatient and outpatient facility care",["pv","py","um"],"Admissions, facility data","Inpatient authorization, claims","Facility vs provider record mismatch"],
+hp:["Health plans","Insure members and manage benefits",["py","pt","pb"],"Benefits, eligibility, networks","Benefit design, network build","Outdated plan rules"],
+py:["Payers","Adjudicate claims and set coverage policy",["hp","um","ch","tp"],"Auth decisions, remits, directories","PA, claims, credentialing","Payer-specific rule variation"],
+tp:["Third-party administrators (TPAs)","Administer self-funded employer plans",["py","um"],"Eligibility, claims, plan terms","Claims and PA for employer plans","Plan terms differ by employer"],
+pb:["Pharmacy benefit managers (PBMs)","Manage drug formularies and pharmacy claims",["hp","pv"],"Formulary, drug PA, claims","Drug authorization","Drug code and quantity errors"],
+ch:["Clearinghouses","Route electronic transactions",["cl","py"],"270/271, 837, 835, 278","Eligibility, claims, status","Rejected files, format errors"],
+um:["Utilization-management organizations","Review medical necessity for payers",["py","tp","hp"],"Clinical criteria, determinations","Imaging, drug and specialty review","Missing clinical documentation"],
+en:["Provider enrollment systems","Register providers with payers and programs",["pv","py","ht"],"NPI, TIN, licences, CAQH data","Applications, revalidation","Expired or inconsistent records"],
+ht:["Healthcare technology platforms","Connect scheduling, data and operations",["pv","cl","en"],"Provider and patient data","Onboarding, directory updates","Duplicates across sources"],
+pa:["Prior Authorization (process)","Payer review before a service is delivered",["elg","ben","dir","clm"],"Clinical notes, codes, decisions","Intake to resolution","Missing documentation"],
+enr:["Provider Enrollment (process)","Gets a provider approved to bill a payer",["dir","clm"],"NPI, TIN, taxonomy, locations","Application, follow-up, revalidation","Wrong TIN or location"],
+clm:["Claims (process)","Request and adjudicate payment",["pa","elg","enr"],"Codes, auth numbers, remits","Submission, denial follow-up","Auth or enrollment gaps"],
+elg:["Eligibility (process)","Confirms active coverage",["pa","clm","ben"],"Member and plan data","Real-time checks","Termed or changed coverage"],
+ben:["Benefits (process)","Defines what a plan covers",["elg","pa"],"Coverage and cost-share rules","Benefit verification","Plan-specific exclusions"],
+dir:["Provider Directory (process)","Lists in-network providers for members",["enr","pa"],"Demographics, network status","Directory updates","Inaccurate listings"]};
+const eb=$('#ents');Object.entries(E).forEach(([k,v])=>{const b=document.createElement('button');b.className='chip'+(k.length==3&&['pa','enr','clm','elg','ben','dir'].includes(k)?' proc':'');b.textContent=v[0].replace(' (process)','');b.dataset.k=k;b.setAttribute('aria-pressed','false');eb.appendChild(b)});
+function ent(k){const v=E[k];document.querySelectorAll('#ents .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k==k));
+$('#entp').innerHTML='<h3>'+v[0]+'</h3><p>'+v[1]+'.</p><p><b>Information exchanged:</b> '+v[3]+'</p><p><b>Related workflows:</b> '+v[4]+'</p><p><b>Data quality challenge:</b> '+v[5]+'</p><p style="margin-top:10px"><b>Connects to:</b> '+v[2].map(x=>'<button class="chip" data-k="'+x+'">'+E[x][0].replace(' (process)','')+'</button>').join('')+'</p>'}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b)ent(b.dataset.k)});ent('pa');
+// payers: name|type|region|note
+const T={N:"National insurer",T:"TPA",B:"Blue Cross Blue Shield licensee",R:"Regional or provider-sponsored plan",M:"Medicaid / Medicare-focused plan",F:"Federal employee plan",K:"Parent company or brand"};
+const PL="UnitedHealthcare|N|National|1;UMR|T|National|1|TPA, not a conventional insurer; UnitedHealthcare-affiliated;Cigna Healthcare|N|National|1;Aetna|N|National|0|CVS Health family;Humana|N|National;Anthem|K|Multi-state|0|Elevance Health brand;Elevance Health|K|Multi-state|0|Parent of Anthem;Kaiser Permanente|R|Multi-state;Molina Healthcare|M|Multi-state;Wellcare|K|Multi-state|0|Centene brand;Oscar Health|N|Multi-state|1;Healthfirst|M|NY|1;EmblemHealth|R|NY;Highmark|B|PA, DE, WV, NY;Independence Blue Cross|B|PA;Horizon BCBS of New Jersey|B|NJ;Florida Blue|B|FL;Blue Shield of California|B|CA|0|Independent Blue licensee;BCBS of Michigan|B|MI;BCBS of Massachusetts|B|MA;BCBS of North Carolina|B|NC;BCBS of Tennessee|B|TN;BCBS of Alabama|B|AL;Premera Blue Cross|B|WA, AK;Regence BlueShield|B|Pacific Northwest, UT, ID;Excellus BCBS|B|NY;CareFirst BCBS|B|MD, DC, VA;Capital Blue Cross|B|PA;BCBS of Kansas City|B|Kansas City area;BCBS of Minnesota|B|MN;BCBS of Rhode Island|B|RI;Priority Health|R|MI;Medica|R|MN, multi-state;Quartz Health Plan|R|WI;Dean Health Plan|R|WI;Sanford Health Plan|R|Upper Midwest;Security Health Plan|R|WI;Network Health|R|WI;Tufts Health Plan|R|MA|0|Point32Health family;Harvard Pilgrim Health Care|R|New England|0|Point32Health family;MVP Health Care|R|NY, VT;CDPHP|R|NY;Univera Healthcare|R|NY|0|Related to Excellus family; verify;Independent Health|R|NY;AmeriHealth Caritas|M|Multi-state;CareSource|M|Multi-state;UPMC Health Plan|R|PA;Geisinger Health Plan|R|PA|0|Ownership to verify;Sentara Health Plans|R|VA;Community Health Choice|M|TX;Superior HealthPlan|M|TX|0|Centene brand;LA Care Health Plan|M|CA;Health Net|M|CA|0|Centene brand;Sharp Health Plan|R|CA;SCAN Health Plan|M|CA;Alignment Health|M|CA, multi-state;Devoted Health|M|Multi-state;Clover Health|M|Multi-state;CalOptima Health|M|CA;Partnership HealthPlan of California|M|CA;GEHA|F|National|1";
+const P=PL.split(';').map((x,i)=>{const f=x.split('|');return{id:'DEMO-PY-'+String(i+1).padStart(3,'0'),name:f[0],tp:f[1],mk:T[f[1]],reg:f[2],mine:f[3]=='1',note:f[4]||'',ver:'Not verified',date:'',site:'',prov:'',auth:''}});
+const pt=$('#pt');pt.innerHTML='<option value="">All types</option>'+Object.values(T).map(t=>'<option>'+t+'</option>').join('');
+function rp(){const q=$('#pq').value.toLowerCase(),t=pt.value;const L=P.filter(p=>(!t||p.mk==t)&&(p.name+p.reg).toLowerCase().includes(q));$('#pc').textContent=L.length+' of '+P.length+' shown';
+$('#ptab').innerHTML='<tr><th>ID</th><th>Organization</th><th>Type</th><th>Region</th><th>Notes</th><th>Verification</th></tr>'+L.map(p=>'<tr><td>'+p.id+'</td><td>'+esc(p.name)+(p.mine?' <span class="mine">My exposure</span>':'')+'</td><td>'+p.mk+'</td><td>'+esc(p.reg)+'</td><td>'+esc(p.note)+'</td><td>'+p.ver+'</td></tr>').join('')}
+$('#pq').oninput=rp;pt.onchange=rp;rp();
+$('#itab').innerHTML='<tr><th>Platform</th><th>Role</th><th>Verification</th></tr>'+[["Availity","Payer portal and clearinghouse network (used in my work)"],["eviCore","Utilization-management organization (used in my work)"],["CAQH","Provider data and credentialing data (ProView)"],["NPPES","CMS registry that issues NPIs"],["PECOS","CMS Medicare provider enrollment system"],["NaviNet","Payer-provider portal (current status to verify)"],["OneHealthPort","Washington-state health information exchange and portal"],["Waystar","Revenue-cycle and clearinghouse technology"]].map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>Links not verified</td></tr>').join('');
+// knowledge
+const G=[["NPI","National Provider Identifier: a unique 10-digit ID for a healthcare provider."],["NPPES","National Plan and Provider Enumeration System: the CMS registry that assigns and stores NPIs."],["TIN","Tax Identification Number: the tax ID a provider or practice bills under."],["Provider taxonomy","A code describing a provider's type and specialty."],["CAQH ProView","A shared provider profile that payers use for credentialing data."],["PECOS","Medicare's enrollment system for providers."],["CMS-855","The family of Medicare enrollment application forms."],["Provider credentialing","Verifying qualifications such as licence, education and history."],["Provider enrollment","Registering a provider with a payer so they can participate and be paid."],["Provider rosters","Lists of providers in a group, shared with payers."],["Provider directories","Public listings of in-network providers."],["Practice locations","Addresses where a provider sees patients, tied to billing and directory data."],["Revalidation","Periodic re-confirmation of enrollment information."],["Demographic maintenance","Keeping names, addresses, phones and specialties current."]];
+$('#gloss').innerHTML=G.map(g=>'<details><summary>'+g[0]+'</summary><p>'+g[1]+'</p></details>').join('');
+const rec={id:'DEMO-PR-001',name:'Alex Morgan, MD (fictional)',spec:'Internal Medicine',state:'Pennsylvania',npi:'DEMO-NPI-0001',tax:'Validated in demonstration',prac:'Northstar Family Practice (fictional)',addr:'',phone:'',enr:'Pending Documentation',eff:'',dir:'Not Yet Published'};
+const lab={id:'Provider ID',name:'Provider name',spec:'Specialty',state:'State',npi:'NPI (demo format only)',tax:'Taxonomy status',prac:'Practice',addr:'Practice address',phone:'Phone',enr:'Enrollment status',eff:'Effective date',dir:'Directory status'};
+$('#rec').innerHTML=Object.keys(rec).map(k=>'<label style="display:block;font-size:.8rem;color:var(--slate);margin-top:6px">'+lab[k]+'<input data-f="'+k+'" value="'+esc(rec[k])+'" style="width:100%"></label>').join('');
+function vc(){const items=[["Name consistency",/\(fictional\)/.test(rec.name)&&rec.name.trim().length>3],["NPI field present (demo format)",/^DEMO-NPI-\d{4}$/.test(rec.npi)],["Taxonomy complete",!!rec.tax.trim()&&/valid/i.test(rec.tax)],["Practice address complete",rec.addr.trim().length>8],["Phone and contact",rec.phone.replace(/\D/g,'').length>=10],["Enrollment status set",!!rec.enr.trim()],["Effective date",/^\d{4}-\d{2}-\d{2}$/.test(rec.eff)],["Update history",rec.dir!='Not Yet Published']];
+let w=/^\d{10}$/.test(rec.npi.trim())?'<li class="bad">Warning: do not enter a real 10-digit NPI here.</li>':'';
+$('#chk').innerHTML=w+items.map(i=>'<li class="'+(i[1]?'ok':'bad')+'">'+(i[1]?'Pass: ':'Needs attention: ')+i[0]+'</li>').join('')}
+document.addEventListener('input',e=>{if(e.target.dataset.f){rec[e.target.dataset.f]=e.target.value;vc()}});vc();
+// datasets
+const SC=["Genetic and molecular testing","Diagnostic laboratory","Radiology and imaging","Oncology-related","Women's health","Specialty medication","Drug authorization","Documentation-based"],SP=["Internal Medicine","Oncology","Radiology","Obstetrics and Gynecology","Family Medicine","Cardiology","Genetics"],ST=["PA","NY","NJ","TX","CA","FL","MA","MI","NC","OH"];
+const d0=new Date(Date.UTC(2026,0,1)),dt=n=>new Date(d0.getTime()+n*864e5).toISOString().slice(0,10);
+const PV=[];for(let i=1;i<=250;i++)PV.push({demo_provider_id:'DEMO-PV-'+String(i).padStart(3,'0'),provider_type:wpick(["Physician","Nurse practitioner","Physician assistant","Group practice"],[5,2,1,2]),specialty:pick(SP),state:pick(ST),demo_npi_reference:'DEMO-NPI-'+String(i).padStart(4,'0'),taxonomy_status:wpick(["Validated","Missing","Mismatch"],[8,1,1]),practice_location_status:wpick(["Complete","Incomplete"],[8,2]),record_completeness:Math.round(55+R()*45),enrollment_status:wpick(["Enrolled","Pending documentation","Pending revalidation","Not started"],[6,2,1,1]),directory_status:wpick(["Published","Not yet published","Needs update"],[6,2,2]),last_updated_date:dt(Math.floor(R()*300))});
+const AU=[];for(let i=1;i<=1200;i++){const rc=Math.floor(R()*270),dc=R()<.78,st=wpick(["Approved","Pending","Denied","Withdrawn"],[60,22,12,6]);AU.push({demo_case_id:'DEMO-CASE-'+String(i).padStart(4,'0'),demo_member_id:'DEMO-MBR-'+String(Math.floor(R()*600)+1).padStart(4,'0'),demo_payer_id:pick(P).id,demo_provider_id:pick(PV).demo_provider_id,specialty:pick(SP),service_category:pick(SC),submission_channel:wpick(["Portal","Fax","Phone"],[6,2,2]),request_received_date:dt(rc),submission_date:dt(rc+Math.floor(R()*4)),status:st,follow_up_count:Math.floor(R()*(st=="Pending"?6:3)),days_pending:Math.round(2+R()*10+(dc?0:6)+(st=="Pending"?3:0)),documentation_complete:dc,outcome:st=="Pending"?"Open":st=="Approved"||st=="Denied"?st:"Withdrawn"})}
+const csv=(a,hdr)=>{const k=Object.keys(a[0]);return k.join(',')+'\n'+a.map(r=>k.map(c=>'"'+String(r[c])+'"').join(',')).join('\n')};
+const PY=P.map(p=>({payer_id:p.id,organization_name:p.name,organization_type:p.mk,market_segment:p.mk,states_served:p.reg,official_website:'Not verified',provider_resource_url:'Not verified',authorization_resource_url:'Not verified',verification_status:p.ver,last_verified_date:'Not checked'}));
+document.addEventListener('click',e=>{const b=e.target.closest('[data-csv]');if(!b)return;const m={a:[AU,'authorization_requests'],p:[PV,'provider_master'],y:[PY,'payer_directory']}[b.dataset.csv];const u=URL.createObjectURL(new Blob([csv(m[0])],{type:'text/csv'})),a=document.createElement('a');a.href=u;a.download=m[1]+'.csv';a.click();URL.revokeObjectURL(u)});
+const cnt=(a,f)=>a.reduce((o,r)=>(o[f(r)]=(o[f(r)]||0)+1,o),{}),avg=a=>a.length?a.reduce((x,y)=>x+y.days_pending,0)/a.length:0;
+const bars=(el,o,max,fmt)=>$(el).innerHTML=Object.entries(o).map(([k,v])=>'<div><span>'+k+'</span><i style="width:'+Math.round(v/max*100)+'%"></i><b>'+(fmt?fmt(v):v)+'</b></div>').join('');
+const pend=AU.filter(r=>r.status=='Pending'),dI=AU.filter(r=>!r.documentation_complete),dC=AU.filter(r=>r.documentation_complete),aI=avg(dI),aC=avg(dC);
+$('#kpis').innerHTML=[[AU.length,'Authorization records'],[(pend.length/AU.length*100).toFixed(1)+'%','Currently pending'],[(dI.length/AU.length*100).toFixed(1)+'%','Documentation incomplete'],[PV.filter(p=>p.enrollment_status=='Enrolled').length+' / '+PV.length,'Providers enrolled']].map(k=>'<div class="card metric"><b>'+k[0]+'</b><span>'+k[1]+'</span></div>').join('');
+const sc=cnt(AU,r=>r.service_category);bars('#b1',sc,Math.max(...Object.values(sc)));
+bars('#b2',{'Complete':aC,'Incomplete':aI},Math.max(aC,aI),v=>v.toFixed(1));
+const en=cnt(PV,p=>p.enrollment_status);bars('#b3',en,Math.max(...Object.values(en)));
+// case study
+const pc=Object.entries(cnt(pend,r=>r.service_category)).sort((a,b)=>b[1]-a[1]);
+const S=[["Business challenge","Pending authorizations tie up staff follow-up time and delay care. Which factors drive the backlog?"],["Current-state workflow","Intake, validation, coding review, submission, follow-up and resolution. Delays appear mostly at follow-up."],["Dataset and assumptions","Synthetic table of "+AU.length+" requests. Days pending is simulated and illustrative only."],["Root-cause analysis","Candidates: missing documentation, channel (fax and phone), payer rules, service category."],["Analytical findings","Incomplete documentation averages <b>"+aI.toFixed(1)+"</b> days versus <b>"+aC.toFixed(1)+"</b> when complete (simulated). Largest pending categories: "+pc.slice(0,3).map(x=>x[0]+" ("+x[1]+")").join(', ')+"."],["Proposed solution","A pre-submission documentation checklist and a weekly review of pending cases by category."],["Implementation roadmap","Define the checklist, pilot on the top pending category, review weekly, then extend."],["Success metrics and limitations","Track days pending, documentation-complete rate and follow-up count. Limitation: results here are simulated, not evidence."]];
+let si=0;function sl(){$('#sn').textContent='Slide '+(si+1)+' of 8';$('#st').textContent=S[si][0];$('#sb').innerHTML='<p>'+S[si][1]+'</p>'}
+$('#sp').onclick=()=>{si=(si+7)%8;sl()};$('#sx').onclick=()=>{si=(si+1)%8;sl()};sl();
+// print and search
+$('#pr').onclick=()=>{document.body.classList.add('pr');window.print()};addEventListener('afterprint',()=>document.body.classList.remove('pr'));
+const IX=[["Prior Authorization","pa prior authorization workflow payer","#pa"],["Healthcare Analytics","analytics excel kpi dashboard","#analytics"],["Provider Operations","provider operations","#provider"],["Provider Enrollment","enrollment npi tin credentialing","#knowledge"],["Payer Directory","payer directory health plans","#directory"],["Data Quality","data quality validation hipaa","#lab"],["SQL Examples","sql select join group by","#lab"],["Case Studies","case study presentation","#case"],["Ecosystem Map","ecosystem tpa pbm clearinghouse","#ecosystem"],["Skills Roadmap","skills learning","#roadmap"],["Recruiter Overview","resume recruiter","#recruiter"]];
+const q=$('#q'),sr=$('#sr');q.oninput=()=>{const v=q.value.toLowerCase().trim();const L=v?IX.filter(x=>(x[0]+x[1]).toLowerCase().includes(v)):[];sr.style.display=v?'block':'none';sr.innerHTML=L.length?L.map(x=>'<a href="'+x[2]+'">'+x[0]+'</a>').join(''):'<a href="#top" style="color:var(--slate)">No match</a>'};
+q.onkeydown=e=>{if(e.key=='Enter'){const a=sr.querySelector('a');if(a&&a.getAttribute('href')!='#top'){location.hash=a.getAttribute('href');q.value='';sr.style.display='none'}}};sr.onclick=()=>{sr.style.display='none';q.value=''};
 </script>
 </body>
 </html>
